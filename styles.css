@@ -14,7 +14,8 @@ body {
 }
 
 #calculator {
-  height: fit-content;
+  height: 350px;
+  width: 200px;
   background-color: black;
   font-size: 24px;
 
@@ -23,11 +24,24 @@ body {
 }
 
 #display {
+  height: 100px;
+  width: 200px;
   color: white;
   font-weight: 900;
   text-align: right;
 }
 
 #keypad {
+  height: 250px;
+  width: 200px;
+
   display: flex;
+  flex-wrap: wrap;
+}
+
+.keypad-btn {
+  height: 50px;
+  aspect-ratio: 1/1;
+
+  flex: 1;
 }
