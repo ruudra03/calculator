@@ -1,9 +1,33 @@
 * {
+  height: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: monospace;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #calculator {
-  background-color: honeydew;
+  height: fit-content;
+  background-color: black;
+  font-size: 24px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#display {
+  color: white;
+  font-weight: 900;
+  text-align: right;
+}
+
+#keypad {
+  display: flex;
 }

@@ -4,9 +4,47 @@
     <meta charset="UTF-8" />
     <title>Calculator</title>
     <link rel="stylesheet" href="./styles.css" />
-    <script src="./index.js"></script>
+    <script src="./index.js" defer></script>
   </head>
   <body>
-    <main id="calculator"></main>
+    <main id="calculator">
+      <div id="display"></div>
+      <div id="keypad">
+        <button type="button" class="keypad-btn all-clear" value="allClear">
+          AC
+        </button>
+        <button type="button" class="keypad-btn sign" value="sign">+/-</button>
+        <button type="button" class="keypad-btn percent" value="percent">
+          %
+        </button>
+        <button type="button" class="keypad-btn operator" value="divide">
+          /
+        </button>
+        <button type="button" class="keypad-btn operand" value="7">7</button>
+        <button type="button" class="keypad-btn operand" value="8">8</button>
+        <button type="button" class="keypad-btn operand" value="9">9</button>
+        <button type="button" class="keypad-btn operator" value="multiply">
+          *
+        </button>
+        <button type="button" class="keypad-btn operand" value="4">4</button>
+        <button type="button" class="keypad-btn operand" value="5">5</button>
+        <button type="button" class="keypad-btn operand" value="6">6</button>
+        <button type="button" class="keypad-btn operator" value="minus">
+          -
+        </button>
+        <button type="button" class="keypad-btn operand" value="1">1</button>
+        <button type="button" class="keypad-btn operand" value="2">2</button>
+        <button type="button" class="keypad-btn operand" value="3">3</button>
+        <button type="button" class="keypad-btn operator" value="plus">
+          +
+        </button>
+        <button type="button" class="keypad-btn undo" value="undo">Undo</button>
+        <button type="button" class="keypad-btn operand" value="0">0</button>
+        <button type="button" class="keypad-btn decimal" value="decimal">
+          .
+        </button>
+        <button type="button" class="keypad-btn equal" value="equal">=</button>
+      </div>
+    </main>
   </body>
 </html>
