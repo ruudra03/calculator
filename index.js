@@ -11,6 +11,40 @@ const CALCULATOR = document.querySelector("#calculator");
 const DISPLAY = CALCULATOR.querySelector("#display");
 DISPLAY.textContent = display; // set display value
 
+// Select calculator keypad
+const KEYPAD = CALCULATOR.querySelector("#keypad");
+
+// Keypad key's Event Listeners
+KEYPAD.querySelector(".equal").addEventListener("click", function (e) {});
+
+// Calculator operation function
+function calculate(firstOperand, secondOperand, operator) {
+  let operation;
+
+  switch (operator) {
+    case "add":
+      operation = add(firstOperand, secondOperand);
+      break;
+
+    case "substract":
+      operation = substract(firstOperand, secondOperand);
+      break;
+
+    case "multiply":
+      operation = multiply(firstOperand, secondOperand);
+      break;
+
+    case "divide":
+      operation = divide(firstOperand, secondOperand);
+      break;
+    default:
+      console.log("Invalid operator.");
+  }
+
+  let result = operation.toString();
+  return result;
+}
+
 // Calculator operator functions
 
 // ADD
