@@ -8,40 +8,68 @@
 
 body {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 #calculator {
-  height: 350px;
-  width: 200px;
-  background-color: black;
-  font-size: 24px;
+  height: fit-content;
+  width: fit-content;
+  border: 8px solid black;
 
   display: flex;
   flex-direction: column;
 }
 
 #display {
-  height: 100px;
-  width: 200px;
+  width: 320px;
+  padding: 8px 0;
+  background-color: black;
   color: white;
+  font-size: 48px;
   font-weight: 900;
   text-align: right;
 }
 
 #keypad {
-  height: 250px;
-  width: 200px;
+  height: 400px;
+  width: 320px;
 
   display: flex;
   flex-wrap: wrap;
 }
 
 .keypad-btn {
-  height: 50px;
-  aspect-ratio: 1/1;
-
   flex: 1;
+  height: 80px;
+  aspect-ratio: 1 / 1;
+  border-radius: 0;
+  border: none;
+  font-size: 32px;
+}
+
+.keypad-btn:hover {
+  border: 1px solid black;
+}
+
+.all-clear {
+  background-color: tomato;
+  font-weight: 600;
+}
+
+.undo {
+  background-color: chocolate;
+}
+
+.operator {
+  background-color: burlywood;
+}
+
+.operand {
+  background-color: blanchedalmond;
+}
+
+.equal {
+  background-color: yellowgreen;
+  font-weight: 900;
 }
