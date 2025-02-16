@@ -65,6 +65,10 @@ body {
   background-color: burlywood;
 }
 
+.operator.active {
+  background-color: sandybrown;
+}
+
 .operand {
   background-color: blanchedalmond;
 }
