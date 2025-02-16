@@ -25,7 +25,7 @@ KEYPAD.querySelectorAll(".operand").forEach(function (operand) {
   operand.addEventListener("click", function (e) {
     // Reset the result display string before accepting new operation
     if (resultString) {
-      resultString = "";
+      resultString = ""; // discard previous result
       DISPLAY.textContent = displayString; // reset display
     }
 
@@ -47,17 +47,13 @@ KEYPAD.querySelectorAll(".operand").forEach(function (operand) {
 // Listen for operator choice
 KEYPAD.querySelectorAll(".operator").forEach(function (operator) {
   operator.addEventListener("click", function (e) {
-    let currentOperatorSelection = KEYPAD.querySelector(".active");
-
-    if (currentOperatorSelection) {
-      // Remove CSS class active from operators if previously existed
-      currentOperatorSelection.classList.remove("active");
-    }
+    removeCurrentOperatorSelection();
 
     // Use last calculated result as first operand if exists
     if (resultString) {
       firstOperandString = resultString;
-      resultString = "";
+      resultString = ""; // reset the result
+      DISPLAY.textContent = firstOperandString; // set the display to reflect current first operater after successive operations
     }
 
     // Check for first operand
@@ -73,12 +69,7 @@ KEYPAD.querySelectorAll(".operator").forEach(function (operator) {
 
 // Listen for calculate operation
 KEYPAD.querySelector(".equal").addEventListener("click", function (e) {
-  let currentOperatorSelection = KEYPAD.querySelector(".active");
-
-  if (currentOperatorSelection) {
-    // Remove CSS class active from operator before calculation
-    currentOperatorSelection.classList.remove("active");
-  }
+  removeCurrentOperatorSelection();
 
   if (!firstOperandString || !operatorString) {
     console.log("Insufficient inputs.");
@@ -86,7 +77,8 @@ KEYPAD.querySelector(".equal").addEventListener("click", function (e) {
   }
 
   if (!secondOperandString) {
-    secondOperandString = "0";
+    // set second operand equal to first operand if value is not provided
+    secondOperandString = firstOperandString;
   }
 
   let firstOperand = parseInt(firstOperandString);
@@ -101,6 +93,53 @@ KEYPAD.querySelector(".equal").addEventListener("click", function (e) {
 });
 
 // Listen for all clear
+KEYPAD.querySelector(".all-clear").addEventListener("click", function (e) {
+  resetCalculator();
+  // Reset result if any and display value
+  resultString = "";
+  DISPLAY.textContent = displayString; // set to default
+  // Remove CSS classes for current operator selector if any
+  removeCurrentOperatorSelection();
+});
+
+// Listen for undo
+KEYPAD.querySelector(".undo").addEventListener("click", function (e) {
+  if (secondOperandString) {
+    // undo from the second operand
+    secondOperandString = secondOperandString.slice(0, -1); // remove last character
+
+    if (!secondOperandString) {
+      // if string is empty after undo
+      displayString = firstOperandString; // set display to show the value of first operand
+    } else {
+      displayString = secondOperandString;
+    }
+
+    // Update display
+    DISPLAY.textContent = displayString;
+  } else if (operatorString) {
+    // undo operand selection
+    removeCurrentOperatorSelection(); // remove CSS active class
+    operatorString = ""; // reset operator string
+  } else {
+    firstOperandString = firstOperandString.slice(0, -1); // remove last character
+
+    if (!firstOperandString) {
+      // if string is empty after undo
+      // Check if previous result is stored
+      if (resultString) {
+        displayString = resultString; // set display to show to the value of last calculated result
+      } else {
+        displayString = "0";
+      }
+    } else {
+      displayString = firstOperandString;
+    }
+
+    // Update display
+    DISPLAY.textContent = displayString;
+  }
+});
 
 // Calculator operation function
 function calculate(firstOperand, secondOperand, operatorString) {
@@ -162,4 +201,14 @@ function resetCalculator() {
   firstOperandString = "";
   operatorString = "";
   secondOperandString = "";
+}
+
+// Remove current selection of operator
+function removeCurrentOperatorSelection() {
+  let currentOperatorSelection = KEYPAD.querySelector(".active");
+
+  if (currentOperatorSelection) {
+    // Remove CSS class active from operator before calculation
+    currentOperatorSelection.classList.remove("active");
+  }
 }
