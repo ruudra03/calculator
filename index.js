@@ -50,21 +50,57 @@ KEYPAD.querySelectorAll(".operator").forEach(function (operator) {
     removeCurrentOperatorSelection();
 
     // Use last calculated result as first operand if exists
-    if (resultString) {
+    if (resultString && parseFloat(resultString)) {
       firstOperandString = resultString;
       resultString = ""; // reset the result
       DISPLAY.textContent = firstOperandString; // set the display to reflect current first operater after successive operations
+    } else if (resultString) {
+      resultString = "";
+      DISPLAY.textContent = displayString; // display default
     }
 
     // Check for first operand
     if (firstOperandString) {
-      operatorString = e.target.value;
+      operatorString = operator.value;
       // Activate active CSS class to display current operator
-      e.target.classList.add("active");
+      operator.classList.add("active");
     } else {
       console.log("Enter an operand first.");
     }
   });
+});
+
+// Listen for percent operation
+KEYPAD.querySelector(".percent").addEventListener("click", function (e) {
+  // Provide percent result for the last operand input
+  let result;
+
+  if (secondOperandString) {
+    // find percentage of second operand
+    let secondOperand = parseFloat(secondOperandString);
+    result = percentageOf(secondOperand);
+    secondOperandString = result.toString();
+  } else if (firstOperandString) {
+    let firstOperand = parseFloat(firstOperandString);
+    result = percentageOf(firstOperand);
+    firstOperandString = result.toString();
+  } else if (resultString) {
+    let lastCalculationResult = parseFloat(resultString);
+    // Use last calculated result
+    if (resultString && lastCalculationResult) {
+      result = percentageOf(lastCalculationResult);
+      firstOperandString = result.toString();
+    } else if (resultString) {
+      result = 0;
+      resultString = "";
+      DISPLAY.textContent = displayString; // display default
+    }
+  } else {
+    result = 0;
+  }
+
+  displayString = result.toString();
+  DISPLAY.textContent = displayString;
 });
 
 // Listen for calculate operation
@@ -81,8 +117,8 @@ KEYPAD.querySelector(".equal").addEventListener("click", function (e) {
     secondOperandString = firstOperandString;
   }
 
-  let firstOperand = parseInt(firstOperandString);
-  let secondOperand = parseInt(secondOperandString);
+  let firstOperand = parseFloat(firstOperandString);
+  let secondOperand = parseFloat(secondOperandString);
 
   resultString = calculate(firstOperand, secondOperand, operatorString);
 
@@ -166,6 +202,12 @@ function calculate(firstOperand, secondOperand, operatorString) {
   }
 
   let result = operation.toString();
+
+  // Return differnet result for "NaN" and "Infinity" output
+  if (result === "NaN" || result === "Infinity") {
+    result = "Go Beyond!";
+  }
+
   return result;
 }
 
@@ -192,6 +234,12 @@ function multiply(firstOperand, secondOperand) {
 // DIVIDE
 function divide(firstOperand, secondOperand) {
   let result = firstOperand / secondOperand;
+  return result;
+}
+
+// PERCENT
+function percentageOf(operand) {
+  let result = operand / 100;
   return result;
 }
 
