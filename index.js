@@ -50,7 +50,7 @@ KEYPAD.querySelectorAll(".operator").forEach(function (operator) {
     removeCurrentOperatorSelection();
 
     // Use last calculated result as first operand if exists
-    if (resultString && parseFloat(resultString)) {
+    if (parseFloat(resultString)) {
       firstOperandString = resultString;
       resultString = ""; // reset the result
       DISPLAY.textContent = firstOperandString; // set the display to reflect current first operater after successive operations
@@ -76,32 +76,45 @@ KEYPAD.querySelector(".percent").addEventListener("click", function (e) {
   let result;
 
   if (secondOperandString) {
-    // find percentage of second operand
-    let secondOperand = parseFloat(secondOperandString);
-    result = percentageOf(secondOperand);
+    result = percentageOf(parseFloat(secondOperandString));
     secondOperandString = result.toString();
   } else if (firstOperandString) {
-    let firstOperand = parseFloat(firstOperandString);
-    result = percentageOf(firstOperand);
+    result = percentageOf(parseFloat(firstOperandString));
     firstOperandString = result.toString();
   } else if (resultString) {
-    let lastCalculationResult = parseFloat(resultString);
     // Use last calculated result
-    if (resultString && lastCalculationResult) {
-      result = percentageOf(lastCalculationResult);
-      firstOperandString = result.toString();
-    } else if (resultString) {
-      result = 0;
-      resultString = "";
-      DISPLAY.textContent = displayString; // display default
-    }
+    result = percentageOf(parseFloat(resultString));
+    firstOperandString = result.toString();
   } else {
     result = 0;
+    resetCalculator();
   }
 
   displayString = result.toString();
   DISPLAY.textContent = displayString;
 });
+
+// Listen for decimal operation
+// KEYPAD.querySelector(".decimal").addEventListener("click", function (e) {
+//   let result;
+
+//   if (parseInt(secondOperandString)) {
+//     result = parseInt(secondOperandString) / 10;
+//     secondOperandString = result.toString();
+//   } else if (parseInt(firstOperandString)) {
+//     result = parseInt(firstOperandString) / 10
+//     firstOperandString = result.toString();
+//   } else if (parseInt(resultString)) {
+
+//   } else if (
+//     parseFloat(secondOperandString) ||
+//     parseFloat(firstOperandString) ||
+//     parseFloat(resultString)
+//   ) {
+//   } else {
+//     result;
+//   }
+// });
 
 // Listen for calculate operation
 KEYPAD.querySelector(".equal").addEventListener("click", function (e) {
@@ -131,8 +144,6 @@ KEYPAD.querySelector(".equal").addEventListener("click", function (e) {
 // Listen for all clear
 KEYPAD.querySelector(".all-clear").addEventListener("click", function (e) {
   resetCalculator();
-  // Reset result if any and display value
-  resultString = "";
   DISPLAY.textContent = displayString; // set to default
   // Remove CSS classes for current operator selector if any
   removeCurrentOperatorSelection();
@@ -249,6 +260,7 @@ function resetCalculator() {
   firstOperandString = "";
   operatorString = "";
   secondOperandString = "";
+  resultString = "";
 }
 
 // Remove current selection of operator
